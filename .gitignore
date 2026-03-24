@@ -37,7 +37,7 @@ venv.bak/
 !*.pt
 # Specifically exclude these image outputs
 Person-Detection-and-GeoTagging-master/outputs/images/
-Pipeline/outputs/images/
+# Pipeline/outputs/images/
 # Pipeline/flights/
 
 
