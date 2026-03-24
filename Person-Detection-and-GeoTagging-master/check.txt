@@ -1,0 +1,73 @@
+python3 raspberry_pi_sender.py \
+  --laptop-ip 100.115.66.25 \
+  --telemetry-port 6000 \
+  --image-port 6001 \
+  --pixhawk-port /dev/ttyACM0 \
+  --baudrate 115200 \
+  --camera-index 0 \
+  --fps 1.0 \
+  --image-quality 40
+
+python3 raspberry_pi_sender.py \
+  --laptop-ip 100.115.66.25 \
+  --telemetry-port 6000 \
+  --image-port 6001 \
+  --pixhawk-port /dev/ttyACM0 \
+  --baudrate 115200 \
+  --camera-index 0 \
+  --fps 1.0 \
+  --image-quality 40
+
+python3 raspberry_pi_live_sender.py \
+  --laptop-ip 100.115.66.25 \
+  --image-port 7001 \
+  --fps 20 \
+  --image-quality 70
+
+
+python maingeo2.py --config config.yaml --mode live --show
+python maingeo2.py --config config.yaml --show
+
+python3 raspberry_pi_sender2.py \
+  --laptop-ip 100.115.66.25 \
+  --telemetry-port 6000 \
+  --image-port 6001 \
+  --fps 1 \
+  --image-quality 80
+
+
+tailscale sender logs :
+tail -f /home/pi/autostart_sender.log
+tail -f /home/pi/drone_sender.log
+
+check live running : 
+sudo systemctl status drone-live.service
+
+// To get file from the pi 
+(venv) PS C:\Pythoncodesss\Person-Detection-and-GeoTagging-master> scp pi@100.97.239.97:/home/pi/codes/raspberry_pi_sender2.py .
+
+
+//TCP !!
+python tcptagger.py --config config.yaml
+
+python tcp_sender.py \
+  --laptop-ip 100.115.66.25 \
+  --port 7000 \
+  --fps 1
+
+python tcptagger.py --config config.yaml --show
+
+
+// Keybinding :
+Key bindings (easy to remember)
+Key	Action
+[	↓ YOLO confidence
+]	↑ YOLO confidence
+,	↓ dedup distance
+.	↑ dedup distance
+<	↓ dedup time window
+>	↑ dedup time window
+-	↓ gimbal pitch offset
+=	↑ gimbal pitch offset
+i	Print current config to terminal
+q	Quit safely

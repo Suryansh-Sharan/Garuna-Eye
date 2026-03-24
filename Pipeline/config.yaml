@@ -1,0 +1,62 @@
+advanced:
+  ground_model: flat_ground
+  heading_correction_deg: 0.0
+  map_tile_server: "Esri.WorldImagery"
+  map_zoom_level: 18
+  min_bbox_area_pixels: 100
+  min_detection_confidence: 0.25
+  pitch_correction_deg: 0.0
+  roll_correction_deg: 0.0
+camera:
+  camera_matrix:
+  - - 264.1617191960014
+    - 0.0
+    - 921.2982970927588
+  - - 0.0
+    - 270.3915296262748
+    - 660.2478295069496
+  - - 0.0
+    - 0.0
+    - 1.0
+  distortion_coeffs:
+  - - 0.002878582702501722
+    - -0.0007521603520451172
+    - 0.00041141674196411944
+    - 0.0009700424390590739
+    - 0.00011062563607808272
+  # hfov_deg: 149.2295516796262
+  # vfov_deg: 126.80344879117244
+  hfov_deg: 143.0
+  vfov_deg: 81.0
+
+deduplication:
+  min_distance_meters: 15.0
+  time_window_seconds: 99999
+gimbal:
+  pitch_offset_deg: -20.0
+  roll_offset_deg: 0.0
+  stabilized: false
+logging:
+  console: true
+  file: drone_geotag.log
+  level: INFO
+  save_every_n_frames: 0
+network:
+  buffer_size: 65536
+  tcp_host: 0.0.0.0
+  tcp_port: 7000
+validation:
+  max_altitude: 150.0
+  max_geotag_distance: 200.0
+  max_pitch_deg: 45.0
+  min_altitude: -5.0
+  min_pitch_deg: -45.0
+yolo:
+  confidence_threshold: 0.25
+  human_classes:
+  - person
+  - people
+  - pedestrian
+  imgsz: 640
+  model_path: ./best.pt
+  # model_path: yolo11n.pt

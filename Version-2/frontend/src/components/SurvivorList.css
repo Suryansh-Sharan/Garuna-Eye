@@ -1,0 +1,91 @@
+.survivor-list {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 120px);
+}
+
+.survivor-list-header {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+  background-color: #f8f9fa;
+}
+
+.survivor-list-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.empty-list {
+  padding: 2rem;
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.survivor-items {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.survivor-item {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.survivor-item:hover {
+  background-color: #f8f9fa;
+}
+
+.survivor-item.selected {
+  background-color: #e3f2fd;
+  border-left: 4px solid #3498db;
+}
+
+.survivor-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.survivor-id {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.survivor-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.detail-label {
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.detail-value {
+  color: #2c3e50;
+}

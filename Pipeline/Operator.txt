@@ -1,0 +1,219 @@
+Here is a **clean, one-page OPERATOR CHECKLIST**.
+This is written so that **someone else can fly your system safely**, not just you.
+No theory, no code — only *do / verify / proceed*.
+
+You can print this or keep it on your phone.
+
+---
+
+# 🛩️ DRONE SURVIVOR DETECTION SYSTEM
+
+## **ONE-PAGE OPERATOR CHECKLIST (v1.0)**
+
+---
+
+## 🔹 BEFORE POWER-ON (GROUND)
+
+### Hardware
+
+* [ ] Drone frame intact, props secure
+* [ ] Camera mounted firmly (no wobble)
+* [ ] Camera angle correct (matches pitch offset)
+* [ ] Pixhawk connected to Raspberry Pi
+* [ ] GPS antenna unobstructed
+* [ ] Battery ≥ 80%
+
+### Storage & System
+
+* [ ] Raspberry Pi SD card has **≥ 5 GB free**
+* [ ] `flights/` directory exists (auto-created is OK)
+* [ ] `best.pt` model present
+* [ ] `config.yaml` verified (no edits needed)
+
+---
+
+## 🔹 POWER-ON SEQUENCE
+
+### Raspberry Pi
+
+* [ ] Power ON Pi
+* [ ] Wait for Pi boot (LED stable / SSH available)
+* [ ] Camera recognized (`/dev/video*` exists)
+
+### Pixhawk
+
+* [ ] Pixhawk powers ON
+* [ ] Heartbeat detected (LEDs normal)
+* [ ] GPS lock achieved (≥ 6 satellites recommended)
+
+---
+
+## 🔹 OPTIONAL: LIVE MONITORING (LAPTOP)
+
+If live view required:
+
+On laptop:
+
+```bash
+python tcptagger.py --config config.yaml --show
+```
+
+Verify:
+
+* [ ] “TCP connected”
+* [ ] Live video visible
+* [ ] Bounding boxes appear on people
+* [ ] Distance values reasonable
+
+---
+
+
+## 🔹 START SYSTEM (PI SIDE)
+
+Run on Raspberry Pi:
+
+```bash
+python3 tcp_sender.py --laptop-ip <LAPTOP_IP>
+```
+
+### Verify logs:
+
+* [ ] “Pixhawk heartbeat received”
+* [ ] “Recording flight to flights/flight_XXXX”
+* [ ] Frames saving in `flights/.../frames/`
+* [ ] Log shows `TCP=ON` or `TCP=OFF` (both OK)
+
+📌 **Important**
+
+* TCP **OFF is acceptable** — system still records
+* Do **NOT** stop mission due to TCP OFF
+
+---
+
+
+## 🔹 TAKEOFF & FLIGHT
+
+### During Flight
+
+* [ ] Maintain altitude ≥ 5 m (better geometry)
+* [ ] Avoid extreme pitch (> 45°)
+* [ ] Avoid sudden aggressive maneuvers
+* [ ] Fly slow over target area (≤ 3 m/s)
+
+### Detection Behavior
+
+* [ ] One person → **one waypoint**
+* [ ] Revisiting same person → **no duplicate waypoint**
+* [ ] Map markers remain stable (centroid behavior)
+
+---
+
+## 🔹 NETWORK FAILURE HANDLING (IMPORTANT)
+
+If:
+
+* Laptop disconnects
+* Wi-Fi drops
+* TCP switches OFF
+
+👉 **DO NOTHING**
+
+System will:
+
+* Continue saving frames + telemetry
+* Reconnect automatically if possible
+* Allow full offline recovery later
+
+---
+
+## 🔹 LANDING & SHUTDOWN
+
+### After Landing
+
+* [ ] Disarm drone
+* [ ] Stop sender on Pi (`Ctrl+C`)
+* [ ] Confirm “Shutdown complete” in logs
+
+### Power Down
+
+* [ ] Power OFF Pi safely
+* [ ] Remove battery
+
+---
+
+## 🔹 POST-FLIGHT (OFFLINE PROCESSING)
+
+### Transfer Data
+
+Copy flight folder from Pi:
+
+```bash
+scp -r flights/flight_XXXX laptop:/path/
+```
+
+### Run Offline Processing
+
+On laptop:
+
+```bash
+python offline_flight.py \
+  --flight-dir flight_XXXX \
+  --config config.yaml \
+  --out offline_outputs
+```
+
+Verify:
+
+* [ ] Annotated images saved
+* [ ] Survivor map generated
+* [ ] Waypoint file created
+* [ ] No duplicate survivor points
+
+---
+
+## 🔹 FINAL VALIDATION
+
+* [ ] Open waypoint file in QGroundControl
+* [ ] Waypoints positioned correctly
+* [ ] Altitude reasonable
+* [ ] No absurd far-away points
+
+---
+
+## 🚨 DO NOT FLY IF
+
+* ❌ GPS shows (0.0, 0.0)
+* ❌ Camera feed is black
+* ❌ Storage nearly full
+* ❌ Props loose
+* ❌ Pixhawk heartbeat missing
+
+---
+
+## 🟢 SYSTEM STATUS MEANING
+
+| Indicator       | Meaning                 |
+| --------------- | ----------------------- |
+| TCP ON          | Live streaming active   |
+| TCP OFF         | Offline-only (SAFE)     |
+| Waypoint added  | New survivor detected   |
+| No new waypoint | Same survivor revisited |
+
+---
+
+## 🏁 OPERATOR CONFIRMATION
+
+If all steps above are satisfied:
+
+> ✅ **SYSTEM CLEARED FOR MISSION**
+
+---
+
+If you want, next I can:
+
+* Convert this into **PDF**
+* Make a **laminated A6 card version**
+* Add **emergency response SOP**
+* Add **mission abort rules**
+
+Just tell me.

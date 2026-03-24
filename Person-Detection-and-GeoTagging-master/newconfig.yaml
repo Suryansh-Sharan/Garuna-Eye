@@ -1,0 +1,87 @@
+# =====================================================
+# DRONE GEOTAGGING SYSTEM CONFIGURATION
+# =====================================================
+
+# Camera settings
+camera:
+  hfov_deg: 143.0          # Horizontal FOV (DJI Action 2 wide mode)
+  vfov_deg: 81.0           # Vertical FOV
+  
+  # Optional: Camera calibration (if you've calibrated lens distortion)
+  # Uncomment and fill these if you have calibration data
+  # distortion_coeffs: [k1, k2, p1, p2, k3]
+  # camera_matrix: [[fx, 0, cx], [0, fy, cy], [0, 0, 1]]
+
+# YOLO detection settings
+yolo:
+  model_path: "runs/train/yolo11_visdrone_final2/weights/best.pt"
+  confidence_threshold: 0.25     # Lower = more detections (but more false positives)
+  imgsz: 640                     # Input image size for YOLO
+  
+  # Classes to detect (must match your model's class names)
+  human_classes:
+    - "person"
+    - "people"
+    - "pedestrian"
+
+# Network configuration
+network:
+  udp_host: "0.0.0.0"           # Listen on all interfaces
+  udp_port: 6000                 # Telemetry port (image port = this + 1)
+  buffer_size: 65536             # UDP buffer size (bytes)
+
+# Validation thresholds
+validation:
+  min_altitude: -5.0             # Minimum valid altitude (meters AGL)
+  max_altitude: 150.0            # Maximum valid altitude (meters AGL)
+  max_geotag_distance: 200.0     # Maximum distance for geotagging (meters)
+  
+  # Pitch angle limits (degrees)
+  # Negative = nose up, Positive = nose down
+  min_pitch_deg: -45.0           # Don't geotag if nose too far up
+  max_pitch_deg: 45.0            # Don't geotag if nose too far down
+
+# Deduplication settings (avoid counting same person twice)
+deduplication:
+  min_distance_meters: 3.0       # Treat detections within this distance as same person
+  time_window_seconds: 30.0      # Forget detections older than this
+
+# Gimbal/Camera mounting (if camera is on gimbal)
+gimbal:
+  pitch_offset_deg: 0.0          # Camera pitch offset from drone body
+  roll_offset_deg: 0.0           # Camera roll offset from drone body
+  
+  # Set to true if camera is stabilized (always points down)
+  # Set to false if camera is fixed to drone body
+  stabilized: false
+
+# Logging configuration
+logging:
+  level: "INFO"                  # DEBUG, INFO, WARNING, ERROR
+  file: "drone_geotag.log"
+  console: true
+  
+  # Save every Nth frame (0 = save only when detections found)
+  save_every_n_frames: 0
+
+# Advanced tuning parameters
+advanced:
+  # Coordinate system corrections
+  # If your geotagging is consistently off in one direction,
+  # adjust these angle offsets (degrees)
+  heading_correction_deg: 0.0
+  pitch_correction_deg: 0.0
+  roll_correction_deg: 0.0
+  
+  # Ray intersection method
+  # "flat_ground" = assume flat terrain at AGL altitude
+  # "dem" = use digital elevation model (not yet implemented)
+  ground_model: "flat_ground"
+  
+  # Detection filtering
+  min_detection_confidence: 0.25
+  min_bbox_area_pixels: 100      # Ignore tiny detections
+  
+  # Map visualization
+  map_zoom_level: 18
+  map_tile_server: "OpenStreetMap"  # or "Satellite"

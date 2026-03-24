@@ -1,0 +1,17 @@
+# FastAPI and Web Server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+
+# Image Processing
+opencv-python>=4.8.0
+numpy>=1.24.0
+
+# YOLO (for human detection - will be integrated)
+ultralytics>=8.0.0
+
+# Configuration and Utilities
+PyYAML>=6.0.0
+
+# Map Generation (for waypoint visualization - optional)
+folium>=0.14.0

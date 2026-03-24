@@ -1,0 +1,8 @@
+// On Laptop :
+python tcptagger.py --config config.yaml    
+
+// On raspberry :
+python tcp_sender.py \
+  --laptop-ip 100.115.66.25 \
+  --port 7000 \
+  --fps 1

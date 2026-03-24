@@ -1,0 +1,34 @@
+# Drone Geotagging System Configuration
+
+camera:
+  hfov_deg: 143.0          # Horizontal field of view (DJI Action 2)
+  vfov_deg: 81.0           # Vertical field of view
+  # Optional: Add distortion coefficients if calibrated
+  # distortion_coeffs: [k1, k2, p1, p2, k3]
+  # camera_matrix: [[fx, 0, cx], [0, fy, cy], [0, 0, 1]]
+
+yolo:
+  model_path: "runs/train/yolo11_visdrone_final2/weights/best.pt"
+  confidence_threshold: 0.25 
+  imgsz: 640 
+  human_classes:
+    - "person"
+    - "people"
+    - "pedestrian"
+
+network:
+  udp_host: "0.0.0.0"             # Listen on all interfaces
+  udp_port: 6000                  # Port for telemetry data
+  # Image data will use udp_port + 1 (5001)
+  buffer_size: 65536              # UDP buffer size (bytes)
+
+validation:
+  min_altitude: -5.0               # Minimum valid altitude (meters)
+  max_altitude: 150.0             # Maximum valid altitude (meters)
+  max_geotag_distance: 200.0      # Maximum geotagging distance (meters)
+
+# Optional: Logging configuration
+logging:
+  level: "INFO"                   # DEBUG, INFO, WARNING, ERROR
+  file: "drone_geotag.log"
+  console: true
