@@ -36,7 +36,7 @@ venv.bak/
 # Allow .pt files (specifically requested)
 !*.pt
 # Specifically exclude these image outputs
-Person-Detection-and-GeoTagging-master/outputs/images/
+# Person-Detection-and-GeoTagging-master/outputs/images/
 # Pipeline/outputs/images/
 # Pipeline/flights/
 
