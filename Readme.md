@@ -2,7 +2,7 @@
 
 ## 1. Project Purpose
 
-Garuna-Eye is a drone-assisted search-and-rescue system that detects people from aerial video, estimates their GPS location, and generates waypoint files for rescue 
+Garuna-Eye is a drone-assisted search-and-rescue system that detects people from aerial video, estimates their GPS location, and generates waypoint files for rescue mission .
 
 At a high level:
 
