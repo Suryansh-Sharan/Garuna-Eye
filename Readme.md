@@ -4,6 +4,8 @@
 
 Garuna-Eye is a drone-assisted search-and-rescue system that detects people from aerial video, estimates their GPS location, and generates waypoint files for rescue mission .
 
+**Project Showcase:** https://drone.suryanshs.in
+
 At a high level:
 
 - A Raspberry Pi on the drone captures camera frames and reads Pixhawk telemetry.
